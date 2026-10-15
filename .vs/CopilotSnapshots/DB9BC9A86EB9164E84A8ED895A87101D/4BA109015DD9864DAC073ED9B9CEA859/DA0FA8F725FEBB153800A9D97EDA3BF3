@@ -1,0 +1,143 @@
+﻿/**
+* Tossan Azhar
+* 041161657
+* Lab 2
+* CST8219 - C++ Programming
+*/
+
+#include <iostream>
+#include <fstream>
+#include <memory>
+#include "Student.h"
+#include <limits>
+
+int main() {
+
+    std::unique_ptr<Student[]>students;
+    int numStudents = 0;
+
+    while (true) {
+        int choice;
+
+        std::cout << "\n===== Student Management System ===== \n";
+        std::cout << "1. Add student records\n";
+        std::cout << "2. Display all students\n";
+        std::cout << "3. Find highest scoring student\n";
+        std::cout << "4. Display class summary\n";
+        std::cout << "5. Save records to file\n";
+        std::cout << "6. Load records from file\n";
+        std::cout << "7. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        if (std::cin.fail()) {
+            std::cout << "Invalid choice. Enter a number between 1 and 7.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        switch (choice) {
+        case 1:
+            int n;
+            std::string temp;
+
+            std::cout << "Enter number of students: ";
+
+            while (true) {
+                std::getline(std::cin, temp);
+
+                // Trim whitespace
+                auto trim = [](std::string& str) {
+                    str.erase(0, str.find_first_not_of(" \t\n\r\f\v"));
+                    str.erase(str.find_last_not_of(" \t\n\r\f\v") + 1);
+                    };
+                trim(temp);
+                /* validate if Input empty */
+                if (temp.empty()) {
+                    std::cout << "Number of students cannot be empty. Please enter a valid number.\n";
+                    continue;
+                }
+                /* Convert str to integer */
+                try {
+                    n = std::stoi(temp);
+                }
+                catch (...) {
+                    std::cout << "Invalid input. Please enter a valid integer for number of students.\n";
+                    std::cout << "Enter number of students: ";
+                    continue;
+                }
+                /* Reject negative numbers */
+                if (n <= 0) {
+                    std::cout << "Invalid input. Please enter a positive integer.\n";
+                    std::cout << "Enter number of students: ";
+                    continue;
+                }
+                /* Limit to 50 students */
+                if (n > 50) {
+                    std::cout << "Number of students exceeds the maximum limit of 50.\n";
+                    std::cout << "Enter number of students: ";
+                    continue;
+                }
+
+                break;
+            }
+
+            students = std::make_unique<Student[]>(n);
+            numStudents = n;
+
+            for (int i = 0; i < n; i++) {
+                std::cout << "\n --- Student " << i + 1 << " --- \n";
+                inputStudent(students[i]);
+                calculateResults(students[i]);
+            }
+            break;
+
+        case 2:
+            if (numStudents == 0) {
+                std::cout << "No student records available. Please add students first.\n";
+            }
+            else {
+                std::cout << "\nDisplaying all students:\n";
+                for (int i = 0; i < numStudents; i++) {
+                    std::cout << "\n --- Student " << i + 1 << "--- \n";
+                    displayStudent(students[i]);
+                }
+            }
+            break;
+        case 3:
+            if (numStudents == 0) {
+                std::cout << "No student records available. Please add students first.\n";
+            }
+            else {
+                smartestStudent(students.get(), numStudents);
+
+            }
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            std::cout << "\n..... Exiting program .....\n";
+            return 0;
+        default:
+            std::cout << "\nInvalid choice. Please enter a number between 1 and 7.\n";
+            break;
+        }
+
+    
+
+    }
+
+
+
+
+    
+
+  
+    return 0;
+}

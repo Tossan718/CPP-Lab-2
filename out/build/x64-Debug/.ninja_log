@@ -1,0 +1,8 @@
+# ninja log v7
+3	904	8136245514373155	CMakeFiles/Tossan_Azhar_Lab2_C++.dir/main.cpp.obj	59c321a54667427
+7	919	8136245514471436	CMakeFiles/Tossan_Azhar_Lab2_C++.dir/Student.cpp.obj	58c8a46afc1dd14d
+919	1183	8136245523553871	Tossan_Azhar_Lab2_C++.exe	7e56576577b2b94e
+4	903	8136258688647959	CMakeFiles/StudentManagement.dir/main.cpp.obj	bc1f1fe3b27b0ccd
+4	989	8136407258597348	CMakeFiles/StudentManagement.dir/Student.cpp.obj	55e8dcc010b417b5
+991	1150	8136407268494792	StudentManagement.exe	436052e06ceda301
+15	1000	8137246814255217	CMakeFiles/StudentManagement.dir/Student.cpp.obj	55e8dcc010b417b5

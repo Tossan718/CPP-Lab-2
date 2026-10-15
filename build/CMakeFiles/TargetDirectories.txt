@@ -1,0 +1,3 @@
+C:/Users/tossa/source/repos/Tossan_Azhar_Lab2_C++/build/CMakeFiles/StudentManagement.dir
+C:/Users/tossa/source/repos/Tossan_Azhar_Lab2_C++/build/CMakeFiles/edit_cache.dir
+C:/Users/tossa/source/repos/Tossan_Azhar_Lab2_C++/build/CMakeFiles/rebuild_cache.dir
