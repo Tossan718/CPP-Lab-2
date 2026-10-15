@@ -1,7 +1,8 @@
+
+
+# 📘 Student Management System - Lab 2
 Tossan Azhar 
 041161657
-
-# 📘 Student Management System  
 A simple C++ console application for managing student records, calculating grades, validating input, and saving/loading data in a tidy fixed‑width table format.
 
 ---
