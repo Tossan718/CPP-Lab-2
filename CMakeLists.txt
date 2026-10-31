@@ -3,7 +3,7 @@ project(StudentManagement)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(StudentManagement
+add_executable(StudentManagement.exe
     main.cpp
     Student.cpp
 )

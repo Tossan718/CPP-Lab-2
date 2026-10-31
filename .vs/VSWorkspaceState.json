@@ -7,8 +7,11 @@
   },
   "ExpandedNodes": [
     "",
-    "\\out",
-    "\\out\\build"
+    "\\build",
+    "\\build\\CMakeFiles",
+    "\\build\\CMakeFiles\\3.28.3",
+    "\\build\\CMakeFiles\\pkgRedirects"
   ],
+  "SelectedNode": "\\build\\CMakeCache.txt",
   "PreviewInSolutionExplorer": false
 }
