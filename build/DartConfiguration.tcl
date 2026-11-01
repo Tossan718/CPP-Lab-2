@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++
-BuildDirectory: C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++/build
+SourceDirectory: C:/Users/tossa/CST8219 CPP/Tossan_Azhar_Lab3_CPP
+BuildDirectory: C:/Users/tossa/CST8219 CPP/Tossan_Azhar_Lab3_CPP/build
 
 # Where to place the cost data store
 CostDataFile: 
@@ -27,7 +27,7 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++"
+ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "C:/Users/tossa/CST8219 CPP/Tossan_Azhar_Lab3_CPP"
 MakeCommand: "C:\Program Files\CMake\bin\cmake.exe" --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 

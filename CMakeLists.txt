@@ -4,7 +4,7 @@ project(StudentManagement)
 include(CTest) 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(StudentManagement.exe
+add_executable(StudentManagement
     main.cpp
     Student.cpp
 )

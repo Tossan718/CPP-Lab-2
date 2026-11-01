@@ -5,8 +5,8 @@
 cmake_minimum_required(VERSION 4.5.0-rc2)
 
 # CTest Start Step
-set(CTEST_SOURCE_DIRECTORY "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++")
-set(CTEST_BINARY_DIRECTORY "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++/build")
+set(CTEST_SOURCE_DIRECTORY "C:/Users/tossa/CST8219 CPP/Tossan_Azhar_Lab3_CPP")
+set(CTEST_BINARY_DIRECTORY "C:/Users/tossa/CST8219 CPP/Tossan_Azhar_Lab3_CPP/build")
 
 # CTest Update Step
 set(CTEST_UPDATE_COMMAND "C:/Program Files/Git/cmd/git.exe")
