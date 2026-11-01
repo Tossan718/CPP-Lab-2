@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Win32-ninja"
+	BuildStamp="20261031-1803-Experimental"
+	Name="TOSSANAZHAR"
+	Generator="ctest-4.5.0-rc2"
+	CompilerName="C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe"
+	CompilerVersion="19.51.36260.0"
+	OSName="Windows"
+	Hostname="TOSSANAZHAR"
+	OSRelease="10.0.26300"
+	OSVersion="Windows 10"
+	OSPlatform="AMD64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="10"
+	ModelName=""
+	ProcessorCacheSize="-1"
+	NumberOfLogicalCPU="12"
+	NumberOfPhysicalCPU="10"
+	TotalVirtualMemory="3328"
+	TotalPhysicalMemory="32358"
+	LogicalProcessorsPerPhysical="1"
+	ProcessorClockFrequency="1700.000000"
+	>
+	<Testing>
+		<StartDateTime>Oct 31 14:03 Eastern Daylight Time</StartDateTime>
+		<StartTestTime>1793469785</StartTestTime>
+		<TestList/>
+		<EndDateTime>Oct 31 14:03 Eastern Daylight Time</EndDateTime>
+		<EndTestTime>1793469785</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

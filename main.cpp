@@ -6,141 +6,286 @@
  */
 
 #include "Student.h"
-#include <fstream>
+#include <iomanip>
 #include <iostream>
-#include <limits>
 #include <memory>
 
-int main() {
+#define IGNORED_CHARS 1000
 
-  std::unique_ptr<Student[]> students;
-  int numStudents = 0;
+using namespace std;
+
+/**
+ * @brief Clears the input buffer to handle invalid input.
+ */
+void clearInputBuffer() {
+  cin.clear();                     // Clear the error state
+  cin.ignore(IGNORED_CHARS, '\n'); // Ignore the rest of the line
+}
+
+/**
+ * @brief Trims whitespace from both ends of a string.
+ *
+ * @param str The string to be trimmed.
+ */
+void trimString(string &str) {
+  /* Lambda function to trim whitespace from both ends of the string */
+  if (str.empty())
+    return;
+  str.erase(0, str.find_first_not_of(" \t\n\r\f\v")); // Left trim
+  str.erase(str.find_last_not_of(" \t\n\r\f\v") + 1); // Right trim
+}
+
+/**
+ * @brief Prompts the user to input student details and returns a Student
+ * object.
+ *
+ * @return A Student object with the provided details.
+ */
+Student inputStudent() {
+  int id = 0;
+  string temp;
+  string name;
+  float marksArray[3] = {0, 0, 0};
 
   while (true) {
-    int choice;
-
-    std::cout << "tossan made this\n";
-    std::cout << "\n===== Student Management System ===== \n";
-    std::cout << "1. Add student records\n";
-    std::cout << "2. Display all students\n";
-    std::cout << "3. Find highest scoring student\n";
-    std::cout << "4. Display class summary\n";
-    std::cout << "5. Save records to file\n";
-    std::cout << "6. Load records from file\n";
-    std::cout << "7. Exit\n";
-    std::cout << "Enter your choice: ";
-    std::cin >> choice;
-
-    if (std::cin.fail()) {
-      std::cout << "Invalid choice. Enter a number between 1 and 7.\n";
-      std::cin.clear();
-      std::cin.ignore(IGNORED_CHARS, '\n');
+    cout << "Enter student ID: ";
+    getline(cin, temp);
+    trimString(temp);
+    if (temp.empty()) {
+      cout << "Student ID cannot be empty. Please enter a valid ID.\n";
       continue;
     }
-    std::cin.ignore(IGNORED_CHARS, '\n');
+    try {
+      id = stoi(temp);
+    } catch (...) {
+      cout << "Invalid input. Please enter a valid integer for student ID.\n";
+      continue;
+    }
+    if (id <= 0) {
+      cout << "Enter a positive ID number.\n";
+      continue;
+    }
+    break;
+  }
+  while (true) {
+    cout << "Enter student name: ";
+    getline(cin, name);
+    trimString(name);
+    if (name.empty()) {
+      cout << "Student name cannot be empty. Please enter a valid name.\n";
+      continue;
+    }
+    break;
+  }
+  for (int i = 0; i < 3; i++) {
+    while (true) {
+      cout << "Enter marks for subject " << i + 1 << ": ";
+      getline(cin, temp);
+      trimString(temp);
+      if (temp.empty()) {
+        cout << "Marks cannot be empty. Please enter a valid mark.\n";
+        continue;
+      }
+      try {
+        marksArray[i] = stof(temp);
+        if (marksArray[i] < 0 || marksArray[i] > 100) {
+          cout << "Marks must be between 0 and 100. Please enter a valid "
+                  "mark.\n";
+          continue;
+        }
+      } catch (...) {
+        cout << "Invalid input. Please enter a valid number for marks.\n";
+        continue;
+      }
+      break;
+    }
+  }
+  // Return a valid Student object after successful input
+  return Student(id, name, marksArray);
+}
+
+/**
+ * @brief Checks if a student ID already exists in the array of students.
+ *
+ * @param students The unique pointer to the array of Student objects.
+ * @param numStudents The number of students in the array.
+ * @param id The student ID to check for uniqueness.
+ * @return true if the ID exists, false otherwise.
+ */
+bool uid(const unique_ptr<Student[]> &students, int count, int id) {
+  for (int i = 0; i < count; i++) {
+    if (students[i].getId() == id) {
+      return false; // ID already exists
+    }
+  }
+  return true;
+}
+
+void appendStudent(unique_ptr<Student[]> &students, int &count,
+                   Student newStudent) {
+  // Create a new array with one additional slot
+  unique_ptr<Student[]> newArray = make_unique<Student[]>(count + 1);
+
+  // Copy existing students to the new array
+  for (int i = 0; i < count; i++) {
+    newArray[i] = std::move(students[i]);
+  }
+
+  // Add the new student to the end of the new array
+  newArray[count] = std::move(newStudent);
+
+  // Update the unique_ptr to point to the new array
+  students = std::move(newArray);
+
+  // Increment the count of students
+  count++;
+  cout << "Student added successfully. Total students: " << count << endl;
+}
+
+/**
+ * @brief Displays all student records in the array.
+ *
+ * @param students The unique pointer to the array of Student objects.
+ * @param count The number of students in the array.
+ */
+void displayAll(const std::unique_ptr<Student[]> &students, int count) {
+  if (count == 0) {
+    std::cout << "No students added yet.\n";
+    return;
+  }
+  for (int i = 0; i < count; ++i) {
+    students[i].display(); // Calls the virtual display() function
+  }
+}
+
+/**
+ * @brief Finds and displays the student with the highest average score.
+ *
+ * @param students The unique pointer to the array of Student objects.
+ * @param count The number of students in the array.
+ */
+void findSmartest(const std::unique_ptr<Student[]> &students, int count) {
+  if (count == 0) {
+    std::cout << "No students to compare.\n";
+    return;
+  }
+  int smartestIndex = 0;
+  for (int i = 1; i < count; ++i) {
+    if (students[i].getAverage() > students[smartestIndex].getAverage()) {
+      smartestIndex = i;
+    }
+  }
+  std::cout << "\n--- Highest Scoring Student ---\n";
+  students[smartestIndex].display();
+}
+
+/**
+ * @brief Displays a summary of the class, including total students, class
+ * average, and number of students who passed.
+ *
+ * @param students The unique pointer to the array of Student objects.
+ * @param count The number of students in the array.
+ */
+void displaySummary(const std::unique_ptr<Student[]> &students, int count) {
+  if (count == 0) {
+    std::cout << "No students to summarize.\n";
+    return;
+  }
+
+  float classTotal = 0.0f;
+  int passed = 0;
+  for (int i = 0; i < count; ++i) {
+    classTotal += students[i].getAverage();
+    if (students[i].getStatus() == PASS) {
+      passed++;
+    }
+  }
+  cout << "\n--- Class Summary ---\n";
+  cout << "Total Students: " << count << "\n";
+  cout << fixed << setprecision(2);
+  cout << "Class Average: " << (classTotal / count) << "\n";
+  cout << "Students Passed: " << passed << "\n";
+}
+
+int main() {
+  unique_ptr<Student[]> students;
+  int numStudents = 0;
+  int choice = 0;
+
+  while (true) {
+
+    cout << "\n===== Student Management System ===== \n";
+    cout << "1. Add student records\n";
+    cout << "2. Display all students\n";
+    cout << "3. Find highest scoring student\n";
+    cout << "4. Display class summary\n";
+    cout << "5. Exit\n";
+    cout << "Enter your choice: ";
+
+    if (!(std::cin >> choice)) {
+      std::cout << "Invalid input. Please enter a number.\n";
+      clearInputBuffer();
+      continue;
+    }
+    clearInputBuffer(); // Clear the newline character left in the buffer
 
     switch (choice) {
     case 1: {
       int n;
-      std::string temp;
+      string temp;
 
-      std::cout << "Enter number of students: ";
-
+      cout << "Enter number of students: ";
       while (true) {
-        std::getline(std::cin, temp);
-
-        // Trim whitespace
-        auto trim = [](std::string &str) {
-          str.erase(0, str.find_first_not_of(" \t\n\r\f\v"));
-          str.erase(str.find_last_not_of(" \t\n\r\f\v") + 1);
-        };
-        trim(temp);
-        /* validate if Input empty */
+        getline(cin, temp);
+        trimString(temp);
         if (temp.empty()) {
-          std::cout << "Number of students cannot be empty. Please enter a "
-                       "valid number.\n";
-          std::cout << "Enter number of students: ";
+          cout << "Number of students cannot be empty.\nEnter number: ";
           continue;
         }
-        /* Convert str to integer */
         try {
-          n = std::stoi(temp);
+          n = stoi(temp);
         } catch (...) {
-          std::cout << "Invalid input. Please enter a valid integer for number "
-                       "of students.\n";
-          std::cout << "Enter number of students: ";
+          cout << "Invalid input. Enter a valid integer.\nEnter number: ";
           continue;
         }
-        /* Reject negative numbers */
         if (n <= 0) {
-          std::cout << "Invalid input. Please enter a positive integer.\n";
-          std::cout << "Enter number of students: ";
+          cout << "Please enter a positive integer.\nEnter number: ";
           continue;
         }
-        /* Limit to 50 students */
         if (n > 50) {
-          std::cout << "Number of students exceeds the maximum limit of 50.\n";
-          std::cout << "Enter number of students: ";
+          cout << "Limit is 50.\nEnter number: ";
           continue;
         }
-
         break;
       }
 
-      students = std::make_unique<Student[]>(n);
-      numStudents = n;
-
       for (int i = 0; i < n; i++) {
-        std::cout << "\n --- Student " << i + 1 << " --- \n";
-        inputStudent(students[i]);
-        calculateResults(students[i]);
+        cout << "\n --- Student " << i + 1 << " --- \n";
+
+        Student s = inputStudent();
+
+        if (!uid(students, numStudents, s.getId())) {
+          cout << "Error: ID " << s.getId() << " already exists!\n";
+        } else {
+          appendStudent(students, numStudents, std::move(s));
+        }
       }
       break;
     }
     case 2:
-      if (numStudents == 0) {
-        std::cout
-            << "No student records available. Please add students first.\n";
-      } else {
-        std::cout << "\nDisplaying all students:\n";
-        for (int i = 0; i < numStudents; i++) {
-          std::cout << "\n --- Student " << i + 1 << "--- \n";
-          displayStudent(students[i]);
-        }
-      }
+      displayAll(students, numStudents);
       break;
     case 3:
-      if (numStudents == 0) {
-        std::cout
-            << "No student records available. Please add students first.\n";
-      } else {
-        smartestStudent(students.get(), numStudents);
-      }
+      findSmartest(students, numStudents);
       break;
     case 4:
-      if (numStudents == 0) {
-        std::cout
-            << "No student records available. Please add students first.\n";
-      } else {
-        summary(students.get(), numStudents);
-      }
+      displaySummary(students, numStudents);
       break;
     case 5:
-      if (numStudents == 0) {
-        std::cout
-            << "No student records available. Please add students first.\n";
-      } else {
-        writeStudentsToFile(students.get(), numStudents, "students.txt");
-      }
-      break;
-    case 6:
-      readStudentsFromFile(students.get(), numStudents, "students.txt");
-      break;
-    case 7:
       std::cout << "\n..... Exiting program .....\n";
       return 0;
     default:
-      std::cout << "\nInvalid choice. Please enter a number between 1 and 7.\n";
+      std::cout << "\nInvalid choice. Please enter a number between 1 and 5.\n";
       break;
     }
   }

@@ -5,66 +5,84 @@
  * CST8219 - C++ Programming
  *
  */
+
 #ifndef STUDENT_H
 #define STUDENT_H
 
-#include <fstream>
 #include <initializer_list>
-#include <iomanip>
-#include <iostream>
 #include <memory>
 #include <string>
 
-
-#define IGNORED_CHARS 1000
-
-/* unscoped enum */
+using namespace std;
+// Unscoped enum for student status
 enum Status { PASS, FAIL };
 
-/* scoped enum */
+// Scoped enum for student grade
 enum class Grade { A, B, C, D, F };
 
 // Constants value must be computable at compile time, so we use constexpr
-constexpr int NUM_SUBJECTS = 3;
 constexpr float PASSING_AVERAGE = 50.0f;
 
-// Global variable to keep track of total students
-static int totalStudents = 0;
-/* extern variable*/
-// extern bool fileWriteSuccess;
 //  Class to hold student data
 class Student {
-  /* private access specifier */
+  // Student data members
 private:
-  /* Use default member initializer for id */
   int id;
-  std::string name;
-  /* Use unique_ptr for dynamic array of marks, exclusive ownership to Student*/
-  std::unique_ptr<float[]> marks;
+  string name;
+  // Use unique_ptr for dynamic array of marks, exclusive ownership to Student
+  unique_ptr<float[]> marks;
   float total;
   float average;
   Status status;
   Grade grade;
 
-  static constexpr int SUBJECTS = 3; // Number of subjects
-  // public access specifier
+  static constexpr int NUM_SUBJECTS = 3; // Number of subjects
+
 public:
-  /** Default constructor */
+  // ===== Constructors =====
+
+  // Default constructor
   Student();
+  // Parameterized constructor
+  Student(int id, const string &name, const float *marks);
+  // Copy constructor
+  Student(const Student &other);
+  // Move constructor
+  Student(Student &&other) noexcept;
+  // Initializer list constructor
+  Student(int id, const string &name, initializer_list<float> marksList);
+  // Delegating constructor
+  Student(int id);
+  // Destructor
+  virtual ~Student();
+
+  // ===== Assignment Operators =====
+
+  // Copy assignment (deep copy)
+  Student &operator=(const Student &other);
+  // Move assignment
+  Student &operator=(Student &&other) noexcept;
+
+  // ===== Member Functions =====
+
+  // Function to calculate total, average, status, and grade
+  void calculateResults();
+  // Virtual function to display student information
+  virtual void display() const;
+
+  // overloaded functions
+  void updateMarks(const float *newMarks);
+  void updateMarks(float m1, float m2, float m3);
+
+  // Recursive function
+  float recursiveTotal(int index) const;
+
+  // ===== Getters =====
+  int getId() const;
+  string getName() const;
+  float getAverage() const;
+  Status getStatus() const;
+  Grade getGrade() const;
 };
-
-// Function prototypes
-void inputStudent(Student &s);
-void calculateResults(Student &s);
-void displayStudent(const Student &s);
-
-// File-related function prototypes (to be implemented by you)
-/* unique_ptr for dynamic array of students*/
-void loadStudents(std::unique_ptr<Student[]> &students, int &count);
-void writeStudentsToFile(Student *students, int n, const std::string &filename);
-void readStudentsFromFile(Student *students, int &count,
-                          const std::string &filename);
-void smartestStudent(Student *students, int n);
-void summary(const Student *students, int n);
 
 #endif

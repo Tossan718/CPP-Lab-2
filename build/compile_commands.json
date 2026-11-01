@@ -1,0 +1,14 @@
+[
+{
+  "directory": "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++/build",
+  "command": "\"C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe\"  /nologo /TP /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\StudentManagement.exe.dir\\main.cpp.obj /FdCMakeFiles\\StudentManagement.exe.dir\\ /FS -c C:\\Users\\tossa\\CST8219\\Tossan_Azhar_Lab3_C++\\main.cpp",
+  "file": "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++/main.cpp",
+  "output": "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++/build/CMakeFiles/StudentManagement.exe.dir/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++/build",
+  "command": "\"C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe\"  /nologo /TP /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\StudentManagement.exe.dir\\Student.cpp.obj /FdCMakeFiles\\StudentManagement.exe.dir\\ /FS -c C:\\Users\\tossa\\CST8219\\Tossan_Azhar_Lab3_C++\\Student.cpp",
+  "file": "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++/Student.cpp",
+  "output": "C:/Users/tossa/CST8219/Tossan_Azhar_Lab3_C++/build/CMakeFiles/StudentManagement.exe.dir/Student.cpp.obj"
+}
+]
