@@ -47,7 +47,8 @@ Student::Student(int id, const string &name, initializer_list<float> marksList)
 // Delegating Constructor
 Student::Student(int id) : Student() { this->id = id; }
 
-// Copy Constructor (Deep Copy)
+// Copy Constructor (Deep Copy) don't share memory, so each object has its own
+// copy of the data
 Student::Student(const Student &other)
     : id(other.id), name(other.name), marks(make_unique<float[]>(NUM_SUBJECTS)),
       total(other.total), average(other.average), status(other.status),
@@ -90,6 +91,7 @@ Student &Student::operator=(const Student &other) {
       marks[i] = other.marks[i];
     }
   }
+  // Student object
   return *this;
 }
 

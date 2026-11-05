@@ -52,7 +52,7 @@ public:
   Student(int id, const string &name, initializer_list<float> marksList);
   // Delegating constructor
   Student(int id);
-  // Destructor
+  // Destructor - virtual to allow derived class destructors to be called
   virtual ~Student();
 
   // ===== Assignment Operators =====

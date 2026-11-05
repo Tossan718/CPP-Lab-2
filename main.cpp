@@ -133,14 +133,14 @@ void appendStudent(unique_ptr<Student[]> &students, int &count,
 
   // Copy existing students to the new array
   for (int i = 0; i < count; i++) {
-    newArray[i] = std::move(students[i]);
+    newArray[i] = move(students[i]);
   }
 
   // Add the new student to the end of the new array
-  newArray[count] = std::move(newStudent);
+  newArray[count] = move(newStudent);
 
   // Update the unique_ptr to point to the new array
-  students = std::move(newArray);
+  students = move(newArray);
 
   // Increment the count of students
   count++;
@@ -154,9 +154,9 @@ void appendStudent(unique_ptr<Student[]> &students, int &count,
  * @param students The unique pointer to the array of Student objects.
  * @param count The number of students in the array.
  */
-void displayAll(const std::unique_ptr<Student[]> &students, int count) {
+void displayAll(const unique_ptr<Student[]> &students, int count) {
   if (count == 0) {
-    std::cout << "No students added yet.\n";
+    cout << "No students added yet.\n";
     return;
   }
   for (int i = 0; i < count; ++i) {
@@ -170,9 +170,9 @@ void displayAll(const std::unique_ptr<Student[]> &students, int count) {
  * @param students The unique pointer to the array of Student objects.
  * @param count The number of students in the array.
  */
-void findSmartest(const std::unique_ptr<Student[]> &students, int count) {
+void findSmartest(const unique_ptr<Student[]> &students, int count) {
   if (count == 0) {
-    std::cout << "No students to compare.\n";
+    cout << "No students to compare.\n";
     return;
   }
   int smartestIndex = 0;
@@ -181,7 +181,7 @@ void findSmartest(const std::unique_ptr<Student[]> &students, int count) {
       smartestIndex = i;
     }
   }
-  std::cout << "\n--- Highest Scoring Student ---\n";
+  cout << "\n--- Highest Scoring Student ---\n";
   students[smartestIndex].display();
 }
 
@@ -192,9 +192,9 @@ void findSmartest(const std::unique_ptr<Student[]> &students, int count) {
  * @param students The unique pointer to the array of Student objects.
  * @param count The number of students in the array.
  */
-void displaySummary(const std::unique_ptr<Student[]> &students, int count) {
+void displaySummary(const unique_ptr<Student[]> &students, int count) {
   if (count == 0) {
-    std::cout << "No students to summarize.\n";
+    cout << "No students to summarize.\n";
     return;
   }
 
@@ -228,8 +228,8 @@ int main() {
     cout << "5. Exit\n";
     cout << "Enter your choice: ";
 
-    if (!(std::cin >> choice)) {
-      std::cout << "Invalid input. Please enter a number.\n";
+    if (!(cin >> choice)) {
+      cout << "Invalid input. Please enter a number.\n";
       clearInputBuffer();
       continue;
     }
@@ -269,7 +269,7 @@ int main() {
         cout << "\n --- Student " << i + 1 << " --- \n";
 
         Student s = inputStudent(students, numStudents);
-        appendStudent(students, numStudents, std::move(s));
+        appendStudent(students, numStudents, move(s));
       }
       break;
     }
@@ -283,10 +283,10 @@ int main() {
       displaySummary(students, numStudents);
       break;
     case 5:
-      std::cout << "\n..... Exiting program .....\n";
+      cout << "\n..... Exiting program .....\n";
       return 0;
     default:
-      std::cout << "\nInvalid choice. Please enter a number between 1 and 5.\n";
+      cout << "\nInvalid choice. Please enter a number between 1 and 5.\n";
       break;
     }
   }
