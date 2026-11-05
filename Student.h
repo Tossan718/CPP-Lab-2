@@ -3,7 +3,6 @@
  * 041161657
  * Lab 3
  * CST8219 - C++ Programming
- *
  */
 
 #ifndef STUDENT_H
@@ -17,7 +16,7 @@ using namespace std;
 // Unscoped enum for student status
 enum Status { PASS, FAIL };
 
-// Scoped enum for student grade
+// Scoped preventing conversion enum for student grade
 enum class Grade { A, B, C, D, F };
 
 // Constants value must be computable at compile time, so we use constexpr

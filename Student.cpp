@@ -11,8 +11,6 @@
 
 using namespace std;
 
-
-
 // ========== Constructors ==========
 
 // Default Constructor
@@ -214,7 +212,7 @@ void Student::display() const {
     cout << "F\n";
     break;
   }
-  cout << "-----------------------------\n";
+  cout << "-------------------------------------------------------\n";
 }
 
 // ======== Getters ========

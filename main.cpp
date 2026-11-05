@@ -36,12 +36,30 @@ void trimString(string &str) {
 }
 
 /**
+ * @brief Checks if a student ID already exists in the array of students.
+ *
+ * @param students The unique pointer to the array of Student objects.
+ * @param numStudents The number of students in the array.
+ * @param id The student ID to check for uniqueness.
+ * @return true if the ID exists, false otherwise.
+ */
+bool uid(const unique_ptr<Student[]> &students, int count, int id) {
+  for (int i = 0; i < count; i++) {
+    if (students[i].getId() == id) {
+      return false; // ID already exists
+    }
+  }
+  return true;
+}
+
+/**
  * @brief Prompts the user to input student details and returns a Student
  * object.
- *
+ * @param students The unique pointer to the array of Student objects.
+ * @param count The number of students in the array.
  * @return A Student object with the provided details.
  */
-Student inputStudent() {
+Student inputStudent(const unique_ptr<Student[]> &students, int count) {
   int id = 0;
   string temp;
   string name;
@@ -63,6 +81,10 @@ Student inputStudent() {
     }
     if (id <= 0) {
       cout << "Enter a positive ID number.\n";
+      continue;
+    }
+    if (!uid(students, count, id)) {
+      cout << "Error: ID " << id << " already exists!\n";
       continue;
     }
     break;
@@ -104,23 +126,6 @@ Student inputStudent() {
   return Student(id, name, marksArray);
 }
 
-/**
- * @brief Checks if a student ID already exists in the array of students.
- *
- * @param students The unique pointer to the array of Student objects.
- * @param numStudents The number of students in the array.
- * @param id The student ID to check for uniqueness.
- * @return true if the ID exists, false otherwise.
- */
-bool uid(const unique_ptr<Student[]> &students, int count, int id) {
-  for (int i = 0; i < count; i++) {
-    if (students[i].getId() == id) {
-      return false; // ID already exists
-    }
-  }
-  return true;
-}
-
 void appendStudent(unique_ptr<Student[]> &students, int &count,
                    Student newStudent) {
   // Create a new array with one additional slot
@@ -139,7 +144,8 @@ void appendStudent(unique_ptr<Student[]> &students, int &count,
 
   // Increment the count of students
   count++;
-  cout << "Student added successfully. Total students: " << count << endl;
+  cout << "Student added successfully!\n";
+  cout << " Total students: " << count << endl;
 }
 
 /**
@@ -262,13 +268,8 @@ int main() {
       for (int i = 0; i < n; i++) {
         cout << "\n --- Student " << i + 1 << " --- \n";
 
-        Student s = inputStudent();
-
-        if (!uid(students, numStudents, s.getId())) {
-          cout << "Error: ID " << s.getId() << " already exists!\n";
-        } else {
-          appendStudent(students, numStudents, std::move(s));
-        }
+        Student s = inputStudent(students, numStudents);
+        appendStudent(students, numStudents, std::move(s));
       }
       break;
     }
